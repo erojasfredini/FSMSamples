@@ -6,20 +6,20 @@ set(LIBRARIES)
 set(LIBRARY_DIRS)
 
 set(INCLUDES ${INCLUDES} .)
-get_target_property(SFML_INCLUDE sfml-graphics INTERFACE_INCLUDE_DIRECTORIES)
+#get_target_property(SFML_INCLUDE sfml-graphics INTERFACE_INCLUDE_DIRECTORIES)
 set(INCLUDES ${INCLUDES} "${SFML_INCLUDE}")
-set(INCLUDES ${INCLUDES} "${Box2D_DIR}/../../../include")
+set(INCLUDES ${INCLUDES} "${Box2D_INCLUDE}")
 set(INCLUDES ${INCLUDES} "../Libreria/Headers")
 
 # Libraries
-set(LIBRARIES ${LIBRARIES} sfml-window sfml-system sfml-main sfml-graphics)
+set(LIBRARIES ${LIBRARIES} ${SFML_LIBS})
 set(LIBRARIES ${LIBRARIES} Box2D)
 set(LIBRARIES ${LIBRARIES} glu32)
 set(LIBRARIES ${LIBRARIES} "StatePattern")
 
 # Libraries Dirs
 set(LIBRARY_DIRS ${LIBRARY_DIRS} "../Libreria/Bin/$<CONFIG>/")
-set(LIBRARY_DIRS ${LIBRARY_DIRS} "${Box2D_DIR}/../../.")
+set(LIBRARY_DIRS ${LIBRARY_DIRS} "${SFML_LIB}" "${Box2D_LIB}")
 
 include_directories(${INCLUDES})
 link_directories(${LIBRARY_DIRS})

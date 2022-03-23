@@ -19,11 +19,28 @@ set (FSM_VERSION_MINOR 0)
 #############                CONFIG                  #############
 ##################################################################
 
-option(SFML_STATIC_LIBRARIES "Usar biblioteca estática para SFML" ON)
+option(FIND_PACKAGE "Buscar los paquetes o usar los del repo" ON)
+if (FIND_PACKAGE)
+    # Buscar el paquete
+    option(SFML_STATIC_LIBRARIES "Usar biblioteca estática para SFML" ON)
 
-find_package(SFML COMPONENTS system window graphics main REQUIRED)
+    find_package(SFML COMPONENTS system window graphics main REQUIRED)
+    find_package(Box2D REQUIRED)
 
-find_package(Box2D REQUIRED)
+    set(Box2D_INCLUDE "${Box2D_DIR}/../../../include")
+    set(Box2D_LIB "${Box2D_DIR}/../../.")
+
+    get_target_property(SFML_INCLUDE sfml-graphics INTERFACE_INCLUDE_DIRECTORIES)
+    set(SFML_LIBS sfml-window sfml-system sfml-main sfml-graphics)
+else()
+    # Usar la version en el repositorio
+    set(SFML_INCLUDE "../Externo/SFML/include/")
+    set(SFML_LIB "../Externo/SFML/lib/")
+    set(SFML_LIBS "sfml-window-s-d" "sfml-system-s-d" "sfml-main-d" "sfml-graphics-s-d" "OpenGL32" "freetype" "winmm")
+
+    set(Box2D_INCLUDE "../Externo/box2d/include/")
+    set(Box2D_LIB "../Externo/box2d/lib/vs2019/$<CONFIG>")
+endif()
 
 ##################################################################
 #############        Comportamientos PROJECT         #############
