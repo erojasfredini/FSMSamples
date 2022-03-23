@@ -1,0 +1,3 @@
+[submodule "Libreria"]
+	path = Libreria
+	url = https://github.com/erojasfredini/StatePatternFramework.git
